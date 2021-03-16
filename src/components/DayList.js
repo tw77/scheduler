@@ -22,14 +22,13 @@ const days = [
 export default function DayList(props) {
   const listItems = days.map((day) => {
     return (
-      <li>
         <DayListItem
+          key={day.id}
           name={day.name}
           spots={day.spots}
           selected={day.name === props.day}
           setDay={props.setDay}
         />
-      </li>
     );
   });
 
