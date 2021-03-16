@@ -12,11 +12,10 @@ const interviewer = {
 export default function InterviewerListItem(props) {
   let interviewerClass = classNames("interviewers__item", {
     "interviewers__item--selected": props.selected,
-    "interviewers__item--full": !props.spots,
  });
 
   return (
-    <li className={interviewerClass} onClick={() => props.setInterviewer(props.name)}>
+    <li className={interviewerClass} onClick={() => props.setInterviewer(props.id)}>
       <img
         className="interviewers__item-image"
         src={props.avatar}
