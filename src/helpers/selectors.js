@@ -1,5 +1,6 @@
 import React from "react";
 
+
 export function getAppointmentsForDay(state, day) {
   let apptsForDay = [];
   const matchingDay = state.days.filter((dayObj) => dayObj.name === day);
@@ -11,4 +12,15 @@ export function getAppointmentsForDay(state, day) {
     apptsForDay.push(state.appointments[appt]);
   }
   return apptsForDay;
+}
+
+export function getInterview(state, interview) {
+  const fullInterviewObj = {};
+  if (interview === null) {
+    return null;
+  }
+  const interviewerObj = state.interviewers[interview.interviewer];
+  fullInterviewObj.student = interview.student;
+  fullInterviewObj.interviewer = interviewerObj;
+  return fullInterviewObj;
 }
