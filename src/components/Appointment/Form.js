@@ -6,6 +6,8 @@ export default function Form(props) {
   const [name, setName] = useState(props.name || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
 
+
+
   function reset() {
     setName("");
     setInterviewer(null);
@@ -15,6 +17,10 @@ export default function Form(props) {
     reset();
     props.onCancel();
   };
+
+
+  
+
 
   return (
     <main className="appointment__card appointment__card--create">
@@ -30,7 +36,7 @@ export default function Form(props) {
         </form>
         <InterviewerList
           interviewers={props.interviewers}
-          value={interviewer}
+          interviewer={interviewer}
           setInterviewer={setInterviewer}
         />
       </section>
@@ -39,7 +45,7 @@ export default function Form(props) {
           <Button danger onClick={cancel}>
             Cancel
           </Button>
-          <Button confirm onClick={props.onSave}>
+          <Button confirm onClick={() => props.onSave(name, interviewer)}>
             Save
           </Button>
         </section>
