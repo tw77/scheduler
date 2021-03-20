@@ -55,10 +55,36 @@ export default function Application(props) {
       .then((response) => {
         return setState({
           ...state,
-          appointments
-        })
+          appointments,
+        });
       });
   }
+
+  function cancelInterview(id, interview) {
+    // console.log('here');
+    // console.log('cancel id: ', id, 'cancel interview: ', interview);
+
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview },
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+    
+    return axios
+      .delete(`http://localhost:8001/api/appointments/${id}`, { interview })
+      .then((response) => {
+        return setState({
+          ...state,
+          appointments,
+        });
+      });
+  }
+
+
 
   const listAppts = dailyAppointments.map((appt) => {
     const interview = getInterview(state, appt.interview);
@@ -70,6 +96,7 @@ export default function Application(props) {
         interview={interview}
         interviewers={interviewers}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     );
   });
