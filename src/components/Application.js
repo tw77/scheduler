@@ -9,6 +9,7 @@ import {
   getInterview,
   getInterviewersForDay,
 } from "helpers/selectors";
+import useVisualMode from "hooks/useVisualMode";
 
 export default function Application(props) {
   const [state, setState] = useState({
@@ -49,10 +50,14 @@ export default function Application(props) {
       [id]: appointment,
     };
 
-    setState({
-      ...state,
-      appointments,
-    });
+    return axios
+      .put(`http://localhost:8001/api/appointments/${id}`, { interview })
+      .then((response) => {
+        return setState({
+          ...state,
+          appointments
+        })
+      });
   }
 
   const listAppts = dailyAppointments.map((appt) => {
