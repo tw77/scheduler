@@ -40,19 +40,17 @@ export default function Application(props) {
   }, []);
 
   function bookInterview(id, interview) {
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview },
-    };
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment,
-    };
-
     return axios
       .put(`http://localhost:8001/api/appointments/${id}`, { interview })
       .then((response) => {
+        const appointment = {
+          ...state.appointments[id],
+          interview: { ...interview },
+        };
+        const appointments = {
+          ...state.appointments,
+          [id]: appointment,
+        };
         return setState({
           ...state,
           appointments,
@@ -61,27 +59,22 @@ export default function Application(props) {
   }
 
   function cancelInterview(id, interview) {
-    // console.log('here');
-    // console.log('cancel id: ', id, 'cancel interview: ', interview);
-
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview },
-    };
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment,
-    };
-    
     return axios
       .delete(`http://localhost:8001/api/appointments/${id}`, { interview })
       .then((response) => {
+        const appointment = {
+          ...state.appointments[id],
+          interview: null,
+        };
+        const appointments = {
+          ...state.appointments,
+          [id]: appointment,
+        };
         return setState({
           ...state,
-          appointments,
-        });
-      });
+          appointments
+        })
+      })
   }
 
 
