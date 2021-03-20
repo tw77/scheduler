@@ -36,7 +36,7 @@ export default function Application(props) {
         appointments: all[1].data,
         interviewers: all[2].data,
       }));
-    });
+    })
   }, []);
 
   function bookInterview(id, interview) {
