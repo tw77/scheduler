@@ -24,7 +24,7 @@ export default function useApplicationData() {
         interviewers: all[2].data,
       }));
     })
-  }, []);
+  }, [state.appointments]);
 
   function bookInterview(id, interview) {
     return axios
@@ -61,7 +61,7 @@ export default function useApplicationData() {
           ...state,
           appointments
         })
-      })
+      });
   }
 
   return { state, setDay, bookInterview, cancelInterview };
