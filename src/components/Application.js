@@ -5,8 +5,8 @@ import Appointment from "components/Appointment/index";
 import DayList from "components/DayList";
 import {
   getAppointmentsForDay,
-  getInterview,
   getInterviewersForDay,
+  getInterview,
 } from "helpers/selectors";
 import useApplicationData from "hooks/useApplicationData";
 
