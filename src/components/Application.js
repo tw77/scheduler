@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import "components/Application.scss";
 import Appointment from "components/Appointment/index";
@@ -15,7 +15,8 @@ export default function Application(props) {
     state,
     setDay,
     bookInterview,
-    cancelInterview
+    cancelInterview,
+    updateSpots,
   } = useApplicationData();
 
   const interviewers = getInterviewersForDay(state, state.day);
@@ -44,7 +45,13 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <DayList days={state.days} day={state.day} setDay={setDay} />
+          <DayList
+            days={state.days}
+            day={state.day}
+            setDay={setDay}
+            appointments={state.appointments}
+            updateSpots={updateSpots}
+          />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"

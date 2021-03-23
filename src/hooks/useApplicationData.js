@@ -23,8 +23,8 @@ export default function useApplicationData() {
         appointments: all[1].data,
         interviewers: all[2].data,
       }));
-    })
-  }, [state.appointments]);
+    });
+  }, []);
 
   function bookInterview(id, interview) {
     return axios
@@ -59,10 +59,19 @@ export default function useApplicationData() {
         };
         return setState({
           ...state,
-          appointments
-        })
+          appointments,
+        });
       });
   }
 
-  return { state, setDay, bookInterview, cancelInterview };
+  function updateSpots(day, appointments) {
+    const dayApptIds = day.appointments;
+    let numOfSpots = 0;
+    for (const id of dayApptIds) {
+      !appointments[id].interview && numOfSpots++;
+    }
+    return numOfSpots;
+  }
+
+  return { state, setDay, bookInterview, cancelInterview, updateSpots };
 }
