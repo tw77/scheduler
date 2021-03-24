@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function useApplicationData() {
+  // Initialize state
   const [state, setState] = useState({
     day: "Monday",
     days: [],
@@ -9,8 +10,7 @@ export default function useApplicationData() {
     interviewers: {},
   });
 
-  const setDay = (day) => setState(state => ({ ...state, day }));
-
+  // Retrieve days, appointments and interviewers data, then update state with it
   useEffect(() => {
     Promise.all([
       axios.get(`/api/days`),
@@ -26,6 +26,23 @@ export default function useApplicationData() {
     });
   }, []);
 
+  // Update day state
+  function setDay(day) {
+    setState((state) => ({ ...state, day }));
+  }
+
+  // Calculate the number of interview spots remaining for a given day
+  function updateSpots(day, appointments) {
+    const dayApptIds = day.appointments;
+    let spotsRemaining = 0;
+    for (const id of dayApptIds) {
+      !appointments[id].interview && spotsRemaining++;
+      // (where an appointment's interview property is null, a spot is remaining)
+    }
+    return spotsRemaining;
+  }
+
+  // Add new interview to database and update state
   function bookInterview(id, interview) {
     return axios
       .put(`/api/appointments/${id}`, { interview })
@@ -45,6 +62,7 @@ export default function useApplicationData() {
       });
   }
 
+  // Remove interview from database and update state
   function cancelInterview(id, interview) {
     return axios
       .delete(`/api/appointments/${id}`, { interview })
@@ -64,14 +82,5 @@ export default function useApplicationData() {
       });
   }
 
-  function updateSpots(day, appointments) {
-    const dayApptIds = day.appointments;
-    let numOfSpots = 0;
-    for (const id of dayApptIds) {
-      !appointments[id].interview && numOfSpots++;
-    }
-    return numOfSpots;
-  }
-
-  return { state, setDay, bookInterview, cancelInterview, updateSpots };
+  return { state, setDay, updateSpots, bookInterview, cancelInterview };
 }

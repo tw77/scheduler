@@ -1,6 +1,4 @@
-import React from "react";
-
-// return an array of appointment objects for a given day
+// Return an array of appointment objects for a given day
 export function getAppointmentsForDay(state, dayName) {
   const apptsForDay = [];
   const day = state.days.filter((day) => day.name === dayName);
@@ -14,7 +12,7 @@ export function getAppointmentsForDay(state, dayName) {
   return apptsForDay;
 }
 
-// return an array of interviewer objects for a given day
+// Return an array of interviewer objects for a given day
 export function getInterviewersForDay(state, dayName) {
   const interviewersForDay = [];
   const day = state.days.filter((day) => day.name === dayName);
@@ -28,14 +26,15 @@ export function getInterviewersForDay(state, dayName) {
   return interviewersForDay;
 }
 
-// return a full interview object, with interviewer data, for a given appointment's "interview" object
-export function getInterview(state, interviewObj) {
-  if (interviewObj === null) {
+// Given an appointment's "interview" property, return a full interview object including interviewer data
+export function getInterview(state, interviewProperty) {
+  if (interviewProperty === null) {
     return null;
   }
+  const interviewerId = interviewProperty.interviewer;
   const interview = {
-    ...interviewObj,
-    interviewer: state.interviewers[interviewObj.interviewer],
+    ...interviewProperty,
+    interviewer: state.interviewers[interviewerId],
   };
   return interview;
 }
