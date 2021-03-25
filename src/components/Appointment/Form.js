@@ -20,11 +20,15 @@ export default function Form(props) {
     props.onCancel();
   }
 
-  /* Verify that a name has been inputted before saving.
-  If no name is inputted, show error message. */
+  /* Check that a name has been inputted and that an interviewer has been selected.
+  If not, show error message. If so, call function to save. */
   function validate() {
     if (name === "") {
       setError("Student name cannot be blank");
+      return;
+    }
+    if (interviewer === null) {
+      setError("Interviewer must be selected");
       return;
     }
     setError("");
