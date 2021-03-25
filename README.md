@@ -1,5 +1,7 @@
 # Interview Scheduler
 
+A single-page interview scheduler application developed while studying React at the Lighthouse Labs Web Development bootcamp, week 7. I used Storybook to work on UI components as well as Jest and Cypress for testing.
+
 ## Setup
 
 Install dependencies with `npm install`.
@@ -21,3 +23,11 @@ npm test
 ```sh
 npm run storybook
 ```
+
+### Screenshots
+
+!["Show application with interview hover state"](https://github.com/tw77/scheduler/blob/master/docs/interview-hover.png?raw=true)
+!["Show confirmation dialog for deleting an interview"](https://github.com/tw77/scheduler/blob/master/docs/interview-remove.png?raw=true)
+!["Show form with "Interviewer must be selected" error message"](https://github.com/tw77/scheduler/blob/master/docs/interviewer-must-be-selected.png?raw=true)
+!["Show form with interviewer selected state"](https://github.com/tw77/scheduler/blob/master/docs/interviewer-select.png?raw=true)
+!["Show successfully saved interview"](https://github.com/tw77/scheduler/blob/master/docs/saved-interview.png?raw=true)
