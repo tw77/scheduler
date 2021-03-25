@@ -1,6 +1,7 @@
 import React from "react";
 
 export default function Status(props) {
+  /* Show status while saving or deleting */
   return (
     <main className="appointment__card appointment__card--status">
       <img

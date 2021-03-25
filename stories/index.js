@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment } from "react";
 
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
@@ -188,7 +188,7 @@ storiesOf("Appointment", module)
       interviewer={null}
       onSave={action("onSave")}
       onCancel={action("onCancel")}
-      onSubmit={event => event.preventDefault()}
+      onSubmit={(event) => event.preventDefault()}
     />
   ))
   .add("Create", () => (

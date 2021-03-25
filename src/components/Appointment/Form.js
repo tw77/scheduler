@@ -3,34 +3,39 @@ import InterviewerList from "components/InterviewerList";
 import Button from "components/Button";
 
 export default function Form(props) {
+  /* Initialize Form state */
   const [name, setName] = useState(props.name || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
   const [error, setError] = useState("");
 
+  /* Reset state to initial */
   function reset() {
     setName("");
     setInterviewer(null);
   }
 
+  /* Reset state, then call function to transition the user back to Form */
   function cancel() {
     reset();
     props.onCancel();
   }
 
+  /* Verify that a name has been inputted before saving.
+  If no name is inputted, show error message. */
   function validate() {
     if (name === "") {
       setError("Student name cannot be blank");
       return;
     }
-
     setError("");
     props.onSave(name, interviewer);
   }
 
+  /* Render Form component */
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
-        <form autoComplete="off" onSubmit={event => event.preventDefault()}> 
+        <form autoComplete="off" onSubmit={(event) => event.preventDefault()}>
           <input
             className="appointment__create-input text--semi-bold"
             name={name}

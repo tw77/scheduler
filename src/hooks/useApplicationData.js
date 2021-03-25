@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function useApplicationData() {
-  // Initialize state
+  /* Initialize state */
   const [state, setState] = useState({
     day: "Monday",
     days: [],
@@ -10,7 +10,7 @@ export default function useApplicationData() {
     interviewers: {},
   });
 
-  // Retrieve days, appointments and interviewers data, then update state with it
+  /* Retrieve days, appointments and interviewers data, then update state with it */
   useEffect(() => {
     Promise.all([
       axios.get(`/api/days`),
@@ -26,12 +26,12 @@ export default function useApplicationData() {
     });
   }, []);
 
-  // Update day state
+  /* Update day state */
   function setDay(day) {
     setState((state) => ({ ...state, day }));
   }
 
-  // Calculate the number of interview spots remaining for a given day
+  /* Calculate the number of interview spots remaining for a given day */
   function updateSpots(day, appointments) {
     const dayApptIds = day.appointments;
     let spotsRemaining = 0;
@@ -42,7 +42,7 @@ export default function useApplicationData() {
     return spotsRemaining;
   }
 
-  // Add new interview to database and update state
+  /* Add new interview to database and update state */
   function bookInterview(id, interview) {
     return axios
       .put(`/api/appointments/${id}`, { interview })
@@ -62,7 +62,7 @@ export default function useApplicationData() {
       });
   }
 
-  // Remove interview from database and update state
+  /* Remove interview from database and update state */
   function cancelInterview(id, interview) {
     return axios
       .delete(`/api/appointments/${id}`, { interview })

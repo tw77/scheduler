@@ -1,6 +1,7 @@
 import React from "react";
 
 export default function Show(props) {
+  /* Show an existing interview */
   return (
     <main className="appointment__card appointment__card--show">
       <section className="appointment__card-left">

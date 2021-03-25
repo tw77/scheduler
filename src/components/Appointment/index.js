@@ -1,6 +1,6 @@
 import React from "react";
 import "components/Appointment/styles.scss";
-
+import useVisualMode from "hooks/useVisualMode";
 import Header from "components/Appointment/Header";
 import Empty from "components/Appointment/Empty";
 import Show from "components/Appointment/Show";
@@ -8,48 +8,49 @@ import Form from "components/Appointment/Form";
 import Status from "components/Appointment/Status";
 import Confirm from "components/Appointment/Confirm";
 import Error from "components/Appointment/Error";
-import useVisualMode from "hooks/useVisualMode";
 
 export default function Appointment(props) {
+  /* All visual modes for this component declared below */
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
+  const CONFIRM = "CONFIRM";
+  const EDIT = "EDIT";
   const CREATE = "CREATE";
   const SAVING = "SAVING";
   const DELETING = "DELETING";
-  const CONFIRM = "CONFIRM";
-  const EDIT = "EDIT";
   const ERROR_SAVE = "ERROR_SAVE";
   const ERROR_DELETE = "ERROR_DELETE";
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
 
-  // Save an interview
+  /* Save an interview */
   function save(name, interviewer) {
     const interview = {
       student: name,
       interviewer,
     };
     transition(SAVING);
-    return props
+    props
       .bookInterview(props.id, interview)
-      .then((resolves) => {
+      .then(() => {
         transition(SHOW);
       })
       .catch((error) => transition(ERROR_SAVE, true));
   }
 
-  // Remove an interview
+  /* Remove an interview */
   function remove() {
     transition(DELETING, true);
-    return props
+    props
       .cancelInterview(props.id, props.interview)
-      .then((resolves) => {
+      .then(() => {
         transition(EMPTY);
       })
       .catch((error) => transition(ERROR_DELETE, true));
   }
 
+  /* Render appointment in a specific visual mode. Pass relevant props to each */
   return (
     <article className="appointment" data-testid="appointment">
       <Header time={props.time} />

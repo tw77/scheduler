@@ -1,6 +1,6 @@
 import React from "react";
-
 import "components/Application.scss";
+import useApplicationData from "hooks/useApplicationData";
 import Appointment from "components/Appointment/index";
 import DayList from "components/DayList";
 import {
@@ -8,9 +8,8 @@ import {
   getInterviewersForDay,
   getInterview,
 } from "helpers/selectors";
-import useApplicationData from "hooks/useApplicationData";
 
-export default function Application(props) {
+export default function Application() {
   const {
     state,
     setDay,
@@ -19,22 +18,26 @@ export default function Application(props) {
     cancelInterview,
   } = useApplicationData();
 
-  const interviewers = getInterviewersForDay(state, state.day);
+  /* Store list of appointments for each day, with data for each appointment to be passed as props. 
+  (These props include functions for selecting and updating data, imported here from "helpers/selectors"
+  and "hooks/useApplicationData") */
+  const listAppts = getAppointmentsForDay(state, state.day).map(
+    (appointment) => {
+      return (
+        <Appointment
+          key={appointment.id}
+          {...appointment}
+          interview={getInterview(state, appointment.interview)}
+          interviewers={getInterviewersForDay(state, state.day)}
+          bookInterview={bookInterview}
+          cancelInterview={cancelInterview}
+        />
+      );
+    }
+  );
 
-  const listAppts = getAppointmentsForDay(state, state.day).map((appt) => {
-    return (
-      <Appointment
-        key={appt.id}
-        id={appt.id}
-        time={appt.time}
-        interview={getInterview(state, appt.interview)}
-        interviewers={interviewers}
-        bookInterview={bookInterview}
-        cancelInterview={cancelInterview}
-      />
-    );
-  });
-
+  /* Render application. 
+  Pass relevant data (+ functions imported from "hooks/useApplicationData") as props to DayList. */
   return (
     <main className="layout">
       <section className="sidebar">
@@ -59,7 +62,10 @@ export default function Application(props) {
           alt="Lighthouse Labs"
         />
       </section>
-      <section className="schedule">{listAppts}</section>
+      <section className="schedule">
+        {listAppts}
+        <Appointment id="last" time="5pm" />
+      </section>
     </main>
   );
 }
